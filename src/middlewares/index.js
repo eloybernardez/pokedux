@@ -15,7 +15,7 @@ export const featuring = (store) => (next) => (actionInfo) => {
 
 // Pokemon number middleware
 export const pokemonNumber = (store) => (next) => (actionInfo) => {
-  const numbered = actionInfo.action.payload.map((pokemon, index) => ({
+  const numbered = actionInfo.payload.map((pokemon, index) => ({
     ...pokemon,
     name: `No. ${String(index).padStart(3, "0")} ${pokemon.name
       .slice(0, 1)

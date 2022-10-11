@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { getPokemons } from "./api";
 import { getPokemonsWithDetails, setLoading } from "./actions";
 import { Col, Spin } from "antd";
@@ -9,8 +9,11 @@ import logo from "./static/logo.svg";
 import "./styles/App.css";
 
 function App() {
-  const pokemons = useSelector((state) => state.pokemons);
-  const loading = useSelector((state) => state.loading);
+  const pokemons = useSelector((state) =>
+    state.getIn(["data", "pokemons"], shallowEqual)
+  ).toJS();
+  const loading = useSelector((state) => state.getIn(["ui", "loading"]));
+
   const dispatch = useDispatch();
 
   useEffect(() => {

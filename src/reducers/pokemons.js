@@ -1,31 +1,33 @@
-import React from "react";
-import { SET_POKEMONS, SET_LOADING, SET_FAVORITE } from "../actions/types";
+import { fromJS } from "immutable";
+import { SET_POKEMONS, SET_FAVORITE } from "../actions/types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-const initalState = {
+
+const initalState = fromJS({
   pokemons: [],
-  loading: false,
-};
+});
 
 export const pokemonsReducer = (state = initalState, action) => {
   switch (action.type) {
     case SET_POKEMONS:
-      return { ...state, pokemons: action.payload };
-
-    case SET_LOADING:
-      return { ...state, loading: action.payload };
+      return state.setIn(["pokemons"], fromJS(action.payload));
 
     case SET_FAVORITE:
-      const newPokemonsList = [...state.pokemons];
-      const currentPokemonIndex = newPokemonsList.findIndex(
-        (pokemon) => pokemon.id === action.payload.pokemonId
-      );
+      const currentPokemonIndex = state
+        .get("pokemons")
+        .findIndex((pokemon) => pokemon.get("id") === action.payload.pokemonId);
       if (currentPokemonIndex < 0) {
         return state;
       }
-      newPokemonsList[currentPokemonIndex].favorite =
-        !newPokemonsList[currentPokemonIndex].favorite;
 
-      return { ...state, pokemons: newPokemonsList };
+      const isFavorite = state.getIn([
+        "pokemons",
+        currentPokemonIndex,
+        "favorite",
+      ]);
+      return state.setIn(
+        ["pokemons", currentPokemonIndex, "favorite"],
+        !isFavorite
+      );
 
     default:
       return state;

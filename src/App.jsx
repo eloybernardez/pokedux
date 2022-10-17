@@ -3,9 +3,9 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { Button, Col, Spin, Row } from "antd";
 import Searcher from "./components/Searcher";
 import PokemonList from "./components/PokemonList";
-import logo from "./static/logo.svg";
 import { setSearched, setError } from "./slices/uiSlice";
 import { fetchPokemonsWithDetails } from "./slices/dataSlice";
+import logo from "./static/logo.svg";
 import "./styles/App.css";
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
         <img src={logo} alt="Pokedux" />
       </Col>
       <Col xs={{ span: 12, offset: 6 }} md={{ span: 8, offset: 8 }}>
-        <Searcher loading={loading} error={isEmpty} />
+        <Searcher loading={loading} error={error} isEmpty={isEmpty} />
       </Col>
       {loading ? (
         <Col offset={12}>
@@ -42,7 +42,7 @@ function App() {
                 type="primary"
                 onClick={() => {
                   dispatch(setSearched(false));
-                  dispatch(setError(isEmpty));
+                  dispatch(setError(false));
                   dispatch(fetchPokemonsWithDetails());
                 }}
               >

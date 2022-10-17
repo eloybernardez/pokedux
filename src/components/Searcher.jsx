@@ -6,16 +6,14 @@ import { useDispatch } from "react-redux";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 
 const { Search } = Input;
-const Searcher = ({ loading, error }) => {
+const Searcher = ({ loading, error, isEmpty }) => {
   const dispatch = useDispatch();
 
   const handleSearch = (searchValue) => {
     dispatch(setSearch(searchValue));
-    dispatch(setSearched(true));
     dispatch(setError(isEmpty));
+    dispatch(setSearched(true));
   };
-
-  console.log(error);
 
   return (
     <>

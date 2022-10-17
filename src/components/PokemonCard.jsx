@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Card } from "antd";
-import { setFavorite } from "../actions";
+import { setFavorite } from "../slices/dataSlice";
 import Meta from "antd/lib/card/Meta";
 import { StarButton } from "./StarButton";
 

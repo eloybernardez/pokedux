@@ -8,15 +8,13 @@ import {
   compose,
   legacy_createStore as createStore,
 } from "redux";
-import thunk from "redux-thunk";
+import thunkMiddleware from "redux-thunk";
 import { logger, pokemonNumber } from "./middlewares/index";
 import "./styles/index.css";
 
 const composeAlt = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const composedEnhancers = composeAlt(
-  applyMiddleware(thunk, logger, pokemonNumber)
-);
+const composedEnhancers = composeAlt(applyMiddleware(thunkMiddleware, logger));
 
 const store = createStore(rootReducer, composedEnhancers);
 

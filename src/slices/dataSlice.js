@@ -17,10 +17,17 @@ export const fetchPokemonsWithDetails = createAsyncThunk(
     const pokemonDetailed = await Promise.all(
       pokemonResponse.map((pokemon) => getPokemonDetails(pokemon))
     );
+
+    const pokemonDetailedNames = pokemonDetailed.map((pokemon) => ({
+      ...pokemon,
+      name: `No. ${
+        pokemon.id
+      } ${pokemon.name[0].toUpperCase()}${pokemon.name.slice(1)}`,
+    }));
     //dispatch loader
     dispatch(setLoading(false));
 
-    dispatch(setPokemons(pokemonDetailed));
+    dispatch(setPokemons(pokemonDetailedNames));
   }
 );
 

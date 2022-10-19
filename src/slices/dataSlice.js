@@ -55,7 +55,7 @@ export const dataSlice = createSlice({
       const searchPokemon = action.payload.toLowerCase();
 
       const searchedPokemons = state.pokemons.filter((pokemon) =>
-        pokemon.name.includes(searchPokemon)
+        pokemon.name.toLowerCase().includes(searchPokemon)
       );
 
       state.pokemons =

@@ -3,6 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { Button, Col, Spin, Row } from "antd";
 import Searcher from "./components/Searcher";
 import PokemonList from "./components/PokemonList";
+import EmptyState from "./components/EmptyState";
 import { setSearched, setError } from "./slices/uiSlice";
 import { fetchPokemonsWithDetails } from "./slices/dataSlice";
 import logo from "./static/logo.svg";
@@ -50,7 +51,11 @@ function App() {
               </Button>
             ) : null}
           </Row>
-          <PokemonList pokemons={pokemons} />
+          {pokemons.length === 0 && searched ? (
+            <EmptyState />
+          ) : (
+            <PokemonList pokemons={pokemons} />
+          )}
         </>
       )}
     </div>
